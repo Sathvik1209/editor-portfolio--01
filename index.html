@@ -401,9 +401,299 @@
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition:none !important;}
   }
+
+
+  /* =====================================
+     FLOATING KEYFRAMES + RGB AMBIENT LIGHTS
+     ===================================== */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  .hero > *:not(.editing-ambient){
+    position:relative;
+    z-index:2;
+  }
+
+  .editing-ambient{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* RGB ambient lights */
+  .rgb-light{
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.18;
+    will-change:transform;
+    animation:rgbFloat 10s ease-in-out infinite alternate;
+  }
+
+  .rgb-cyan{
+    background:#00e5ff;
+    top:-250px;
+    left:-150px;
+  }
+
+  .rgb-magenta{
+    background:#ff008c;
+    right:-180px;
+    top:20%;
+    animation-delay:-4s;
+  }
+
+  .rgb-red{
+    background:#ff3b30;
+    bottom:-300px;
+    left:40%;
+    animation-delay:-7s;
+  }
+
+  @keyframes rgbFloat{
+    0%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(80px,40px) scale(1.2);}
+    100%{transform:translate(-40px,100px) scale(.9);}
+  }
+
+  /* Floating editing keyframes */
+  .keyframe{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border:1.5px solid var(--amber);
+    transform:rotate(45deg);
+    opacity:.65;
+    box-shadow:0 0 8px rgba(242,183,5,.4);
+    animation:keyframeFloat 6s ease-in-out infinite;
+    will-change:transform;
+  }
+
+  .kf-1{top:15%;left:10%;}
+  .kf-2{
+    top:70%;left:15%;
+    border-color:var(--cyan);
+    box-shadow:0 0 10px rgba(62,230,208,.5);
+    animation-delay:-2s;
+  }
+  .kf-3{
+    top:20%;right:15%;
+    border-color:var(--magenta);
+    box-shadow:0 0 10px rgba(255,61,138,.5);
+    animation-delay:-4s;
+  }
+  .kf-4{
+    top:65%;right:20%;
+    border-color:var(--red);
+    box-shadow:0 0 10px rgba(228,87,46,.45);
+    animation-delay:-1s;
+  }
+  .kf-5{top:45%;left:48%;animation-delay:-3s;}
+  .kf-6{
+    bottom:12%;left:40%;
+    border-color:var(--cyan);
+    box-shadow:0 0 10px rgba(62,230,208,.5);
+    animation-delay:-5s;
+  }
+  .kf-7{
+    top:35%;right:35%;
+    border-color:var(--magenta);
+    box-shadow:0 0 10px rgba(255,61,138,.5);
+    animation-delay:-2.5s;
+  }
+  .kf-8{bottom:25%;left:5%;animation-delay:-4.5s;}
+
+  @keyframes keyframeFloat{
+    0%{transform:translateY(0) rotate(45deg);}
+    50%{transform:translateY(-18px) rotate(225deg);}
+    100%{transform:translateY(0) rotate(405deg);}
+  }
+
+  /* Subtle motion-graphics path lines */
+  .motion-line{
+    position:absolute;
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(62,230,208,.4),transparent);
+    opacity:.4;
+    transform-origin:left center;
+  }
+
+  .line-1{width:300px;top:30%;left:5%;transform:rotate(20deg);}
+  .line-2{width:400px;bottom:25%;right:5%;transform:rotate(-15deg);}
+  .line-3{width:250px;top:60%;left:35%;transform:rotate(35deg);}
+
+  @media(max-width:760px){
+    .rgb-light{
+      width:300px;
+      height:300px;
+      filter:blur(70px);
+      opacity:.14;
+    }
+
+    .keyframe{
+      width:13px;
+      height:13px;
+    }
+
+    .motion-line{opacity:.2;}
+  }
+
+
+
+  /* =====================================
+     SITE-WIDE FLOATING KEYFRAMES + RGB
+     ===================================== */
+
+  body{
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* Global fixed ambient layer behind every section */
+  .global-editing-ambient{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    overflow:hidden;
+    opacity:.72;
+  }
+
+  .global-rgb-light{
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.14;
+    will-change:transform;
+  }
+
+  .global-cyan{background:#00e5ff;top:-220px;left:-220px;}
+  .global-magenta{background:#ff008c;top:28%;right:-280px;}
+  .global-red{background:#ff3b30;bottom:-260px;left:28%;}
+  .global-purple{background:#7c3cff;bottom:10%;right:-220px;opacity:.09;}
+
+  /* Section-specific floating editing objects */
+  section{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+  }
+
+  .section-editing-fx{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+    opacity:.62;
+  }
+
+  section > *:not(.section-editing-fx){
+    position:relative;
+    z-index:1;
+  }
+
+  .section-keyframe{
+    position:absolute;
+    width:15px;
+    height:15px;
+    border:1.5px solid var(--amber);
+    transform:rotate(45deg);
+    opacity:.48;
+    box-shadow:0 0 9px rgba(242,183,5,.28);
+    animation:sectionKeyFloat 7s ease-in-out infinite;
+    will-change:transform;
+  }
+
+  .section-keyframe.s1{top:18%;left:8%;}
+  .section-keyframe.s2{
+    top:70%;left:14%;
+    border-color:var(--cyan);
+    box-shadow:0 0 9px rgba(62,230,208,.35);
+    animation-delay:-2s;
+  }
+  .section-keyframe.s3{
+    top:25%;right:10%;
+    border-color:var(--magenta);
+    box-shadow:0 0 9px rgba(255,61,138,.35);
+    animation-delay:-4s;
+  }
+  .section-keyframe.s4{
+    bottom:16%;right:22%;
+    border-color:var(--red);
+    box-shadow:0 0 9px rgba(228,87,46,.3);
+    animation-delay:-5s;
+  }
+
+  @keyframes sectionKeyFloat{
+    0%,100%{transform:translateY(0) rotate(45deg);}
+    50%{transform:translateY(-16px) rotate(225deg);}
+  }
+
+  .section-motion-line{
+    position:absolute;
+    height:1px;
+    width:280px;
+    background:linear-gradient(90deg,transparent,rgba(62,230,208,.28),transparent);
+    opacity:.32;
+  }
+
+  .section-motion-line.l1{
+    top:28%;left:-5%;
+    transform:rotate(18deg);
+  }
+
+  .section-motion-line.l2{
+    bottom:25%;right:-8%;
+    width:340px;
+    background:linear-gradient(90deg,transparent,rgba(255,61,138,.28),transparent);
+    transform:rotate(-16deg);
+  }
+
+  /* Ensure dark sections still show subtle color depth */
+  .projects,.contact,.services,.about{
+    position:relative;
+  }
+
+  @media(max-width:760px){
+    .global-rgb-light{
+      width:320px;
+      height:320px;
+      filter:blur(90px);
+      opacity:.1;
+    }
+
+    .section-keyframe{
+      width:11px;
+      height:11px;
+    }
+
+    .section-motion-line{
+      opacity:.18;
+    }
+  }
+
 </style>
 </head>
 <body>
+
+  <!-- SITE-WIDE RGB AMBIENT LIGHTS -->
+  <div class="global-editing-ambient" aria-hidden="true">
+    <div class="global-rgb-light global-cyan"></div>
+    <div class="global-rgb-light global-magenta"></div>
+    <div class="global-rgb-light global-red"></div>
+    <div class="global-rgb-light global-purple"></div>
+  </div>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="sprocket-row" aria-hidden="true">
   <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -426,6 +716,26 @@
 <main>
   <!-- HERO -->
   <section class="hero wrap">
+
+    <!-- Floating editing keyframes + RGB ambient lights -->
+    <div class="editing-ambient" aria-hidden="true">
+      <div class="rgb-light rgb-cyan"></div>
+      <div class="rgb-light rgb-magenta"></div>
+      <div class="rgb-light rgb-red"></div>
+
+      <div class="keyframe kf-1"></div>
+      <div class="keyframe kf-2"></div>
+      <div class="keyframe kf-3"></div>
+      <div class="keyframe kf-4"></div>
+      <div class="keyframe kf-5"></div>
+      <div class="keyframe kf-6"></div>
+      <div class="keyframe kf-7"></div>
+      <div class="keyframe kf-8"></div>
+
+      <div class="motion-line line-1"></div>
+      <div class="motion-line line-2"></div>
+      <div class="motion-line line-3"></div>
+    </div>
     <div class="hero-eyebrow">Video Editor — Commercial / Narrative / Social</div>
     <h1><span class="glitch" data-text="CUTTING STORIES">CUTTING STORIES</span><br><span class="glitch" data-text="THAT HOLD.">THAT HOLD.</span></h1>
     <p class="hero-sub">I'm Sathvik Reddy, a video editor who turns raw footage into pace, tension, and payoff — for brands, filmmakers, and creators who need every frame to earn its place.</p>
@@ -458,6 +768,14 @@
 
   <!-- WORK -->
   <section class="section wrap reveal" id="work">
+    <div class="section-editing-fx" aria-hidden="true">
+      <span class="section-keyframe s1"></span>
+      <span class="section-keyframe s2"></span>
+      <span class="section-keyframe s3"></span>
+      <span class="section-keyframe s4"></span>
+      <span class="section-motion-line l1"></span>
+      <span class="section-motion-line l2"></span>
+    </div>
     <div class="section-head">
       <div>
         <div class="section-label">Selected Work</div>
@@ -521,6 +839,14 @@ Kept the overall edit simple, clean, and engaging.</div>
 
   <!-- ABOUT -->
   <section class="section wrap reveal" id="about">
+    <div class="section-editing-fx" aria-hidden="true">
+      <span class="section-keyframe s1"></span>
+      <span class="section-keyframe s2"></span>
+      <span class="section-keyframe s3"></span>
+      <span class="section-keyframe s4"></span>
+      <span class="section-motion-line l1"></span>
+      <span class="section-motion-line l2"></span>
+    </div>
     <div class="section-head">
       <div>
         <div class="section-label">About</div>
@@ -550,6 +876,14 @@ Kept the overall edit simple, clean, and engaging.</div>
 
   <!-- CONTACT -->
   <section class="section wrap contact reveal" id="contact" style="border-bottom:none;">
+    <div class="section-editing-fx" aria-hidden="true">
+      <span class="section-keyframe s1"></span>
+      <span class="section-keyframe s2"></span>
+      <span class="section-keyframe s3"></span>
+      <span class="section-keyframe s4"></span>
+      <span class="section-motion-line l1"></span>
+      <span class="section-motion-line l2"></span>
+    </div>
     <div class="section-label">Contact</div>
     <h2>Let's cut<br>something great.</h2>
     <p class="contact-sub">Have a project in mind? I'm currently taking on new commercial, narrative, and social work.</p>
@@ -696,6 +1030,97 @@ Kept the overall edit simple, clean, and engaging.</div>
       }
     });
   });
+
+
+  /* =====================================
+     SCROLL INTERACTION
+     FLOATING KEYFRAMES + RGB LIGHTS
+     ===================================== */
+  (function(){
+    const hero = document.querySelector(".hero");
+    const keyframes = document.querySelectorAll(".keyframe");
+    const lights = document.querySelectorAll(".rgb-light");
+
+    if(!hero) return;
+
+    function updateAmbient(){
+      const rect = hero.getBoundingClientRect();
+
+      let progress = -rect.top / hero.offsetHeight;
+      progress = Math.max(0, Math.min(progress, 1));
+
+      keyframes.forEach((key,index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+        const x = progress * (40 + index * 15) * direction;
+        const y = progress * (60 + index * 10);
+        const rotation = 45 + progress * (180 + index * 40);
+
+        key.style.transform =
+          `translate(${x}px, ${y * direction}px) rotate(${rotation}deg)`;
+      });
+
+      lights.forEach((light,index) => {
+        const speed = (index + 1) * 80;
+        const x = progress * speed * (index % 2 === 0 ? 1 : -1);
+        const y = progress * speed;
+
+        light.style.transform =
+          `translate(${x}px, ${y}px) scale(${1 + progress * .3})`;
+      });
+    }
+
+    window.addEventListener("scroll", updateAmbient, {passive:true});
+    window.addEventListener("resize", updateAmbient);
+    updateAmbient();
+  })();
+
+
+  /* =====================================
+     SITE-WIDE RGB + KEYFRAME PARALLAX
+     ===================================== */
+  (function(){
+    const globalLights = document.querySelectorAll('.global-rgb-light');
+    const sections = document.querySelectorAll('.section-editing-fx');
+
+    function updateGlobalEffects(){
+      const scroll = window.scrollY;
+      const vh = window.innerHeight;
+
+      globalLights.forEach((light, i) => {
+        const dir = i % 2 === 0 ? 1 : -1;
+        const x = Math.sin(scroll * 0.00035 + i) * (70 + i * 20) * dir;
+        const y = Math.cos(scroll * 0.00025 + i) * (55 + i * 15);
+        const scale = 1 + Math.sin(scroll * 0.0003 + i) * 0.12;
+        light.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      });
+
+      sections.forEach((fx, index) => {
+        const rect = fx.parentElement.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const distance = (center - vh / 2) / vh;
+        const progress = Math.max(-1, Math.min(1, distance));
+
+        const keys = fx.querySelectorAll('.section-keyframe');
+        keys.forEach((key, i) => {
+          const dir = i % 2 === 0 ? 1 : -1;
+          const x = progress * (35 + i * 12) * dir;
+          const y = progress * (45 + i * 10);
+          const rotation = 45 + scroll * 0.018 * dir;
+          key.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+        });
+
+        const lines = fx.querySelectorAll('.section-motion-line');
+        lines.forEach((line, i) => {
+          const dir = i === 0 ? 1 : -1;
+          line.style.transform += ` translateX(${progress * 45 * dir}px)`;
+        });
+      });
+    }
+
+    window.addEventListener('scroll', updateGlobalEffects, {passive:true});
+    window.addEventListener('resize', updateGlobalEffects);
+    updateGlobalEffects();
+  })();
 
 </script>
 
